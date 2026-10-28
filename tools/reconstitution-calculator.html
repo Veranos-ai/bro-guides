@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reconstitution calculator | BRO Research</title>
+<meta name="description" content="Works out strength, draw volume and syringe units for a mixed peptide vial, and shows the arithmetic.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../css/bro.css">
+<link rel="alternate" hreflang="en" href="reconstitution-calculator.html">
+<link rel="alternate" hreflang="nl" href="../nl/tools/reconstitution-calculator.html">
+<script>try{var l=localStorage.getItem('bro-lang');if(l&&l!==document.documentElement.lang){var a=document.querySelector('link[rel=alternate][hreflang="'+l+'"]');if(a)location.replace(a.href)}}catch(e){}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo-link" href="../index.html">
+      <img class="logo-mark" src="../assets/brand/logo-mark.svg" alt="" width="34" height="34">
+      <span class="logo-word">BRO <span class="logo-sub">Research</span></span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav">Menu</button>
+    <nav class="main-nav" id="main-nav" aria-label="Primary">
+      <div class="nav-item has-sub"><a href="../guides.html">Guides</a><button type="button" class="sub-toggle" aria-expanded="false" aria-label="Show pages in Guides"><span aria-hidden="true"></span></button><ul class="submenu"><li><a href="../guides/reconstitution.html">How to mix peptides</a></li><li><a href="../guides/syringe.html">How to read a syringe</a></li><li><a href="../guides/pen.html">How a peptide pen works</a></li><li><a href="../guides/storage.html">How to store peptides</a></li><li><a href="../glossary.html">Glossary</a></li></ul></div>
+      <div class="nav-item has-sub"><a href="../calculators.html" aria-current="page">Calculators</a><button type="button" class="sub-toggle" aria-expanded="false" aria-label="Show pages in Calculators"><span aria-hidden="true"></span></button><ul class="submenu"><li><a href="reconstitution-calculator.html" aria-current="page">Reconstitution calculator</a></li><li><a href="supply-calculator.html">Supply calculator</a></li></ul></div>
+      <a href="../studies.html">Studies</a>
+      <a href="../compounds.html">Compounds</a>
+      <div class="lang-switch" role="group" aria-label="Language"><a href="reconstitution-calculator.html" hreflang="en" lang="en" data-set-lang="en" aria-current="true">EN</a><a href="../nl/tools/reconstitution-calculator.html" hreflang="nl" lang="nl" data-set-lang="nl">NL</a></div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Home</a><span>/</span><a href="../calculators.html">Calculators</a><span>/</span><span>Reconstitution</span></nav>
+      <h1>Reconstitution calculator</h1>
+      <p class="lede">Enter the vial mass, the water volume and the target amount. The answer, the syringe drawing and the working update as you type.</p>
+      
+    </div>
+  </section>
+  <section class="section section--tight">
+    <div class="wrap">
+<div class="calc-app" id="calc-app">
+        <div class="calc-sticky" aria-hidden="true">
+          <span>Draw volume</span>
+          <span class="calc-sticky-value"><b id="sticky-units">—</b><span>units</span></span>
+        </div>
+        <div class="calc-grid">
+
+          <div class="calc-inputs">
+
+            <div class="pick" data-pick="strength">
+              <div class="pick-head">
+                <span class="pick-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6v3.5l3 3V20a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8.5l3-3V2Z"/><path d="M6 13h12"/><path d="M12 10v6"/></svg>
+</span>
+                <label for="custom-strength">Vial mass</label>
+                <span class="pick-unit">mg</span>
+              </div>
+              <p class="pick-help">The amount of peptide printed on the vial label.</p>
+              <div class="chips">
+                <button type="button" class="chip" data-value="1" aria-pressed="false">1 mg</button>
+                <button type="button" class="chip" data-value="5" aria-pressed="false">5 mg</button>
+                <button type="button" class="chip" data-value="10" aria-pressed="true">10 mg</button>
+                <button type="button" class="chip" data-value="15" aria-pressed="false">15 mg</button>
+                <button type="button" class="chip" data-value="20" aria-pressed="false">20 mg</button>
+                <button type="button" class="chip chip--other" data-other="1" aria-pressed="false">Other</button>
+              </div>
+              <div class="custom-row">
+                <input id="custom-strength" type="text" placeholder="Vial mass" inputmode="decimal" autocomplete="off">
+                <span class="unit-pill">mg</span>
+              </div>
+            </div>
+
+            <div class="pick" data-pick="water">
+              <div class="pick-head">
+                <span class="pick-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5s6.5 7 6.5 11.5a6.5 6.5 0 0 1-13 0C5.5 9.5 12 2.5 12 2.5Z"/><path d="M9.5 14.5a2.8 2.8 0 0 0 2.8 2.8"/></svg>
+</span>
+                <label for="custom-water">Water volume</label>
+                <span class="pick-unit">mL</span>
+              </div>
+              <p class="pick-help">The bacteriostatic water added when mixing.</p>
+              <div class="chips">
+                <button type="button" class="chip" data-value="1" aria-pressed="false">1 mL</button>
+                <button type="button" class="chip" data-value="2" aria-pressed="true">2 mL</button>
+                <button type="button" class="chip" data-value="3" aria-pressed="false">3 mL</button>
+                <button type="button" class="chip" data-value="5" aria-pressed="false">5 mL</button>
+                <button type="button" class="chip chip--other" data-other="1" aria-pressed="false">Other</button>
+              </div>
+              <div class="custom-row">
+                <input id="custom-water" type="text" placeholder="Water volume" inputmode="decimal" autocomplete="off">
+                <span class="unit-pill">mL</span>
+              </div>
+            </div>
+
+            <div class="pick" data-pick="dose">
+              <div class="pick-head">
+                <span class="pick-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2.5 21.5 7"/><path d="m14.6 4.9 4.5 4.5"/><path d="M18.6 8.6 8.2 19a4.5 4.5 0 0 1-6.4-6.4L12.3 2.2"/><path d="m7 5.5 11.5 11.5"/></svg>
+</span>
+                <label for="custom-dose">Target amount</label>
+              </div>
+              <p class="pick-help">The amount of peptide a draw should contain. The calculator turns it into a volume.</p>
+              <div class="chips">
+                <button type="button" class="chip" data-value="100" aria-pressed="false">100 mcg</button>
+                <button type="button" class="chip" data-value="250" aria-pressed="true">250 mcg</button>
+                <button type="button" class="chip" data-value="500" aria-pressed="false">500 mcg</button>
+                <button type="button" class="chip" data-value="1000" aria-pressed="false">1 mg</button>
+                <button type="button" class="chip" data-value="2500" aria-pressed="false">2.5 mg</button>
+                <button type="button" class="chip" data-value="5000" aria-pressed="false">5 mg</button>
+                <button type="button" class="chip chip--other" data-other="1" aria-pressed="false">Other</button>
+              </div>
+              <div class="custom-row">
+                <input id="custom-dose" type="text" placeholder="Target amount" inputmode="decimal" autocomplete="off">
+                <span class="seg" id="dose-unit" role="group" aria-label="Unit"><button type="button" class="seg-btn" data-unit="mcg" aria-pressed="true">mcg</button><button type="button" class="seg-btn" data-unit="mg" aria-pressed="false">mg</button></span>
+              </div>
+            </div>
+
+            <div class="pick" data-pick="syringe">
+              <div class="pick-head">
+                <span class="pick-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7"/><path d="M21 3 12.5 11.5"/><path d="M17 8.5 21 12.5"/><path d="M13 7.5 5.5 15a4 4 0 0 0 3.5 6.5"/><path d="m11.5 9.5 3 3"/><path d="M2.5 21.5 5 19"/></svg>
+</span>
+                <span class="pick-label" id="lbl-syringe">Syringe</span>
+                <span class="pick-unit">U-100</span>
+              </div>
+              <p class="pick-help">The size printed on the syringe. A U-100 syringe has 100 units in each mL. <a class="link-strong" href="../guides/syringe.html">How to read one</a>.</p>
+              <div class="chips" role="group" aria-labelledby="lbl-syringe">
+                <button type="button" class="chip" data-value="30" aria-pressed="false">0.3 mL · 30 units</button>
+                <button type="button" class="chip" data-value="50" aria-pressed="false">0.5 mL · 50 units</button>
+                <button type="button" class="chip" data-value="100" aria-pressed="true">1 mL · 100 units</button>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="calc-output" id="calc-output" aria-live="polite">
+
+            <div class="result-hero" id="result-hero">
+              <span class="result-label" id="result-label">Draw volume</span>
+              <div class="result-value"><span id="result-units">—</span><span class="unit">units</span></div>
+              <div class="result-sub" id="result-sub">&nbsp;</div>
+            </div>
+
+            <div class="warning-bar" id="warning"></div>
+
+            <p class="result-sentence" id="result-sentence"></p>
+
+            <div class="syringe-box">
+              <svg id="syringe-svg" viewBox="0 0 520 104" role="img" aria-label="Syringe showing the draw volume"></svg>
+              <div class="syringe-caption" id="syringe-caption"></div>
+            </div>
+
+            <div class="result-rows">
+              <div class="result-line"><span>Strength</span><strong id="r-strength">—</strong></div>
+              <div class="result-line"><span>Draw volume</span><strong id="r-volume">—</strong></div>
+              <div class="result-line"><span>Syringe reading</span><strong id="r-reading">—</strong></div>
+              <div class="result-line"><span>Draws per vial</span><strong id="r-uses">—</strong></div>
+            </div>
+
+            <div class="formula-note" id="formula"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="calc-notes">
+        <div class="callout">
+          <strong>How it works</strong>
+          Strength = vial mass ÷ water volume. Draw volume = target amount ÷ strength. Units = draw volume × 100. This is arithmetic only. Check any result by hand before relying on it.
+        </div>
+        <div class="callout callout--warn">
+  <strong>For research use only</strong>
+  This page reports what published studies and researchers have found. It is information, not advice.
+</div>
+
+      </div>
+<script type="application/json" id="calc-i18n">
+{
+  "label": "Draw volume",
+  "units": "units",
+  "enterAll": "Enter the vial mass, the water volume and the target amount.",
+  "sentence": "A {mg} mg vial mixed with {ml} mL of water is {conc} mg/mL. To reach {target}, the syringe draws {drawMl} mL. That is the {units}-unit mark on a {barrel}-unit syringe.",
+  "sub": "{drawMl} mL · {conc} mg per mL",
+  "concentration": "{c} mg/mL",
+  "volume": "{d} mL",
+  "reading": "{u} of {max} units",
+  "draws": "{n} draws",
+  "workConc": "Strength: {mg} mg ÷ {ml} mL = {c} mg/mL",
+  "workDraw": "Draw: {t} mg ÷ {c} mg/mL = {d} mL",
+  "workUnits": "Syringe: {d} mL × 100 = {u} units",
+  "warnOver": "A draw of {u} units is more than the {max}-unit syringe holds. A larger syringe fits it, or less water makes a stronger mix with a smaller draw.",
+  "warnSmall": "A draw of {u} units is hard to read accurately. Researchers usually aim for 5 to 50 units. More water makes the draw larger.",
+  "warnLarge": "A draw of {u} units is more than 50. Less water makes a stronger mix with a smaller draw.",
+  "caption": "U-100 syringe · {ml} mL ({max} units)",
+  "svgLabel": "Syringe showing the draw volume",
+  "mcg": "mcg",
+  "mg": "mg"
+}
+</script>
+
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="logo-link" href="../index.html">
+          <img class="logo-mark" src="../assets/brand/logo-mark.svg" alt="" width="34" height="34">
+          <span class="logo-word">BRO <span class="logo-sub">Research</span></span>
+        </a>
+        <p>Plain-English research resources for people new to peptides.</p>
+      </div>
+      <div class="footer-cols">
+        <div><h4>Site</h4><a href="../guides.html">Guides</a><a href="../calculators.html">Calculators</a><a href="../studies.html">Studies</a><a href="../compounds.html">Compounds</a><a href="../glossary.html">Glossary</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 BRO Research. For research use only. Content is provided for educational and informational purposes only. It reports published studies and common researcher practice. It is not medical advice and is not intended to diagnose, treat, cure or prevent any condition.</div>
+  </div>
+</footer>
+
+<script src="../js/bro.js"></script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rekenhulp voor oplossen | BRO Research</title>
+<meta name="description" content="Berekent sterkte, op te trekken volume en spuiteenheden voor een opgelost peptideflesje en toont de rekensom.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../../assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../css/bro.css">
+<link rel="alternate" hreflang="en" href="../../tools/reconstitution-calculator.html">
+<link rel="alternate" hreflang="nl" href="reconstitution-calculator.html">
+<script>try{var l=localStorage.getItem('bro-lang');if(l&&l!==document.documentElement.lang){var a=document.querySelector('link[rel=alternate][hreflang="'+l+'"]');if(a)location.replace(a.href)}}catch(e){}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Ga naar de inhoud</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo-link" href="../index.html">
+      <img class="logo-mark" src="../../assets/brand/logo-mark.svg" alt="" width="34" height="34">
+      <span class="logo-word">BRO <span class="logo-sub">Research</span></span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav">Menu</button>
+    <nav class="main-nav" id="main-nav" aria-label="Primary">
+      <div class="nav-item has-sub"><a href="../guides.html">Gidsen</a><button type="button" class="sub-toggle" aria-expanded="false" aria-label="Toon pagina's in Gidsen"><span aria-hidden="true"></span></button><ul class="submenu"><li><a href="../guides/reconstitution.html">Zo los je peptiden op</a></li><li><a href="../guides/syringe.html">Zo lees je een spuit af</a></li><li><a href="../guides/pen.html">Zo werkt een peptidepen</a></li><li><a href="../guides/storage.html">Zo bewaar je peptiden</a></li><li><a href="../glossary.html">Woordenlijst</a></li></ul></div>
+      <div class="nav-item has-sub"><a href="../calculators.html" aria-current="page">Rekenhulpen</a><button type="button" class="sub-toggle" aria-expanded="false" aria-label="Toon pagina's in Rekenhulpen"><span aria-hidden="true"></span></button><ul class="submenu"><li><a href="reconstitution-calculator.html" aria-current="page">Rekenhulp voor oplossen</a></li><li><a href="supply-calculator.html">Rekenhulp voor voorraad</a></li></ul></div>
+      <a href="../studies.html">Onderzoek</a>
+      <a href="../compounds.html">Stoffen</a>
+      <div class="lang-switch" role="group" aria-label="Taal"><a href="../../tools/reconstitution-calculator.html" hreflang="en" lang="en" data-set-lang="en">EN</a><a href="reconstitution-calculator.html" hreflang="nl" lang="nl" data-set-lang="nl" aria-current="true">NL</a></div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Navigatiepad"><a href="../index.html">Home</a><span>/</span><a href="../calculators.html">Rekenhulpen</a><span>/</span><span>Oplossen</span></nav>
+      <h1>Rekenhulp voor oplossen</h1>
+      <p class="lede">Vul de massa van het flesje, het watervolume en de gewenste hoeveelheid in. Het antwoord, de spuittekening en de berekening verschijnen terwijl je typt.</p>
+      
+    </div>
+  </section>
+  <section class="section section--tight">
+    <div class="wrap">
+<div class="calc-app" id="calc-app">
+        <div class="calc-sticky" aria-hidden="true">
+          <span>Op te trekken volume</span>
+          <span class="calc-sticky-value"><b id="sticky-units">—</b><span>eenheden</span></span>
+        </div>
+        <div class="calc-grid">
+
+          <div class="calc-inputs">
+
+            <div class="pick" data-pick="strength">
+              <div class="pick-head">
+                <span class="pick-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6v3.5l3 3V20a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8.5l3-3V2Z"/><path d="M6 13h12"/><path d="M12 10v6"/></svg>
+</span>
+                <label for="custom-strength">Massa van het flesje</label>
+                <span class="pick-unit">mg</span>
+              </div>
+              <p class="pick-help">De hoeveelheid peptide die op het etiket van het flesje staat.</p>
+              <div class="chips">
+                <button type="button" class="chip" data-value="1" aria-pressed="false">1 mg</button>
+                <button type="button" class="chip" data-value="5" aria-pressed="false">5 mg</button>
+                <button type="button" class="chip" data-value="10" aria-pressed="true">10 mg</button>
+                <button type="button" class="chip" data-value="15" aria-pressed="false">15 mg</button>
+                <button type="button" class="chip" data-value="20" aria-pressed="false">20 mg</button>
+                <button type="button" class="chip chip--other" data-other="1" aria-pressed="false">Anders</button>
+              </div>
+              <div class="custom-row">
+                <input id="custom-strength" type="text" placeholder="Massa van het flesje" inputmode="decimal" autocomplete="off">
+                <span class="unit-pill">mg</span>
+              </div>
+            </div>
+
+            <div class="pick" data-pick="water">
+              <div class="pick-head">
+                <span class="pick-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5s6.5 7 6.5 11.5a6.5 6.5 0 0 1-13 0C5.5 9.5 12 2.5 12 2.5Z"/><path d="M9.5 14.5a2.8 2.8 0 0 0 2.8 2.8"/></svg>
+</span>
+                <label for="custom-water">Watervolume</label>
+                <span class="pick-unit">mL</span>
+              </div>
+              <p class="pick-help">Het bacteriostatisch water dat bij het oplossen is toegevoegd.</p>
+              <div class="chips">
+                <button type="button" class="chip" data-value="1" aria-pressed="false">1 mL</button>
+                <button type="button" class="chip" data-value="2" aria-pressed="true">2 mL</button>
+                <button type="button" class="chip" data-value="3" aria-pressed="false">3 mL</button>
+                <button type="button" class="chip" data-value="5" aria-pressed="false">5 mL</button>
+                <button type="button" class="chip chip--other" data-other="1" aria-pressed="false">Anders</button>
+              </div>
+              <div class="custom-row">
+                <input id="custom-water" type="text" placeholder="Watervolume" inputmode="decimal" autocomplete="off">
+                <span class="unit-pill">mL</span>
+              </div>
+            </div>
+
+            <div class="pick" data-pick="dose">
+              <div class="pick-head">
+                <span class="pick-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2.5 21.5 7"/><path d="m14.6 4.9 4.5 4.5"/><path d="M18.6 8.6 8.2 19a4.5 4.5 0 0 1-6.4-6.4L12.3 2.2"/><path d="m7 5.5 11.5 11.5"/></svg>
+</span>
+                <label for="custom-dose">Gewenste hoeveelheid</label>
+              </div>
+              <p class="pick-help">De hoeveelheid peptide die in het opgetrokken volume moet zitten. De rekenhulp zet die om in een volume.</p>
+              <div class="chips">
+                <button type="button" class="chip" data-value="100" aria-pressed="false">100 mcg</button>
+                <button type="button" class="chip" data-value="250" aria-pressed="true">250 mcg</button>
+                <button type="button" class="chip" data-value="500" aria-pressed="false">500 mcg</button>
+                <button type="button" class="chip" data-value="1000" aria-pressed="false">1 mg</button>
+                <button type="button" class="chip" data-value="2500" aria-pressed="false">2,5 mg</button>
+                <button type="button" class="chip" data-value="5000" aria-pressed="false">5 mg</button>
+                <button type="button" class="chip chip--other" data-other="1" aria-pressed="false">Anders</button>
+              </div>
+              <div class="custom-row">
+                <input id="custom-dose" type="text" placeholder="Gewenste hoeveelheid" inputmode="decimal" autocomplete="off">
+                <span class="seg" id="dose-unit" role="group" aria-label="Eenheid"><button type="button" class="seg-btn" data-unit="mcg" aria-pressed="true">mcg</button><button type="button" class="seg-btn" data-unit="mg" aria-pressed="false">mg</button></span>
+              </div>
+            </div>
+
+            <div class="pick" data-pick="syringe">
+              <div class="pick-head">
+                <span class="pick-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7"/><path d="M21 3 12.5 11.5"/><path d="M17 8.5 21 12.5"/><path d="M13 7.5 5.5 15a4 4 0 0 0 3.5 6.5"/><path d="m11.5 9.5 3 3"/><path d="M2.5 21.5 5 19"/></svg>
+</span>
+                <span class="pick-label" id="lbl-syringe">Spuit</span>
+                <span class="pick-unit">U-100</span>
+              </div>
+              <p class="pick-help">De grootte die op de spuit staat. Een U-100-spuit heeft 100 eenheden per mL. <a class="link-strong" href="../guides/syringe.html">Zo lees je er een af</a>.</p>
+              <div class="chips" role="group" aria-labelledby="lbl-syringe">
+                <button type="button" class="chip" data-value="30" aria-pressed="false">0,3 mL · 30 eenheden</button>
+                <button type="button" class="chip" data-value="50" aria-pressed="false">0,5 mL · 50 eenheden</button>
+                <button type="button" class="chip" data-value="100" aria-pressed="true">1 mL · 100 eenheden</button>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="calc-output" id="calc-output" aria-live="polite">
+
+            <div class="result-hero" id="result-hero">
+              <span class="result-label" id="result-label">Op te trekken volume</span>
+              <div class="result-value"><span id="result-units">—</span><span class="unit">eenheden</span></div>
+              <div class="result-sub" id="result-sub">&nbsp;</div>
+            </div>
+
+            <div class="warning-bar" id="warning"></div>
+
+            <p class="result-sentence" id="result-sentence"></p>
+
+            <div class="syringe-box">
+              <svg id="syringe-svg" viewBox="0 0 520 104" role="img" aria-label="Spuit die het op te trekken volume toont"></svg>
+              <div class="syringe-caption" id="syringe-caption"></div>
+            </div>
+
+            <div class="result-rows">
+              <div class="result-line"><span>Sterkte</span><strong id="r-strength">—</strong></div>
+              <div class="result-line"><span>Op te trekken volume</span><strong id="r-volume">—</strong></div>
+              <div class="result-line"><span>Stand op de spuit</span><strong id="r-reading">—</strong></div>
+              <div class="result-line"><span>Keer op te trekken per flesje</span><strong id="r-uses">—</strong></div>
+            </div>
+
+            <div class="formula-note" id="formula"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="calc-notes">
+        <div class="callout">
+          <strong>Hoe het werkt</strong>
+          Sterkte = massa van het flesje ÷ watervolume. Op te trekken volume = gewenste hoeveelheid ÷ sterkte. Eenheden = op te trekken volume × 100. Dit is alleen rekenwerk. Controleer elk resultaat met de hand voordat je erop vertrouwt.
+        </div>
+        <div class="callout callout--warn">
+  <strong>Uitsluitend voor onderzoek</strong>
+  Deze pagina geeft weer wat gepubliceerde studies en onderzoekers hebben gevonden. Het is informatie, geen advies.
+</div>
+
+      </div>
+<script type="application/json" id="calc-i18n">
+{
+  "label": "Op te trekken volume",
+  "units": "eenheden",
+  "enterAll": "Vul de hoeveelheid in het flesje, het watervolume en de gewenste hoeveelheid in.",
+  "sentence": "Een flesje van {mg} mg, opgelost in {ml} mL water, heeft een concentratie van {conc} mg/mL. Voor {target} trekt de spuit {drawMl} mL op. Dat is de streep bij {units} eenheden op een spuit van {barrel} eenheden.",
+  "sub": "{drawMl} mL · {conc} mg per mL",
+  "concentration": "{c} mg/mL",
+  "volume": "{d} mL",
+  "reading": "{u} van {max} eenheden",
+  "draws": "{n} keer",
+  "workConc": "Concentratie: {mg} mg ÷ {ml} mL = {c} mg/mL",
+  "workDraw": "Volume: {t} mg ÷ {c} mg/mL = {d} mL",
+  "workUnits": "Spuit: {d} mL × 100 = {u} eenheden",
+  "warnOver": "Een volume van {u} eenheden is meer dan de spuit van {max} eenheden aankan. Een grotere spuit past wel, of minder water geeft een sterkere oplossing met een kleiner volume.",
+  "warnSmall": "Een volume van {u} eenheden is moeilijk nauwkeurig af te lezen. Onderzoekers mikken meestal op 5 tot 50 eenheden. Meer water maakt het volume groter.",
+  "warnLarge": "Een volume van {u} eenheden is meer dan 50. Minder water geeft een sterkere oplossing met een kleiner volume.",
+  "caption": "U-100-spuit · {ml} mL ({max} eenheden)",
+  "svgLabel": "Spuit die het op te trekken volume toont",
+  "mcg": "mcg",
+  "mg": "mg"
+}
+</script>
+
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="logo-link" href="../index.html">
+          <img class="logo-mark" src="../../assets/brand/logo-mark.svg" alt="" width="34" height="34">
+          <span class="logo-word">BRO <span class="logo-sub">Research</span></span>
+        </a>
+        <p>Heldere onderzoeksbronnen over peptiden voor wie er nieuw in is.</p>
+      </div>
+      <div class="footer-cols">
+        <div><h4>Site</h4><a href="../guides.html">Gidsen</a><a href="../calculators.html">Rekenhulpen</a><a href="../studies.html">Onderzoek</a><a href="../compounds.html">Stoffen</a><a href="../glossary.html">Woordenlijst</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 BRO Research. Uitsluitend voor onderzoeksdoeleinden. De inhoud is alleen bedoeld als educatieve en informatieve bron. Zij geeft weer wat gepubliceerde studies laten zien en wat onderzoekers gangbaar doen. Het is geen medisch advies en is niet bedoeld om een aandoening vast te stellen, te behandelen, te genezen of te voorkomen.</div>
+  </div>
+</footer>
+
+<script src="../../js/bro.js"></script>
+</body>
+</html>

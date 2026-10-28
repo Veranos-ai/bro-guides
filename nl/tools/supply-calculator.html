@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rekenhulp voor voorraad | BRO Research</title>
+<meta name="description" content="Berekent hoeveel keren, weken en maanden een set peptideflesjes meegaat, om de lengte van een onderzoek te plannen.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../../assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../css/bro.css">
+<link rel="alternate" hreflang="en" href="../../tools/supply-calculator.html">
+<link rel="alternate" hreflang="nl" href="supply-calculator.html">
+<script>try{var l=localStorage.getItem('bro-lang');if(l&&l!==document.documentElement.lang){var a=document.querySelector('link[rel=alternate][hreflang="'+l+'"]');if(a)location.replace(a.href)}}catch(e){}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Ga naar de inhoud</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo-link" href="../index.html">
+      <img class="logo-mark" src="../../assets/brand/logo-mark.svg" alt="" width="34" height="34">
+      <span class="logo-word">BRO <span class="logo-sub">Research</span></span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav">Menu</button>
+    <nav class="main-nav" id="main-nav" aria-label="Primary">
+      <div class="nav-item has-sub"><a href="../guides.html">Gidsen</a><button type="button" class="sub-toggle" aria-expanded="false" aria-label="Toon pagina's in Gidsen"><span aria-hidden="true"></span></button><ul class="submenu"><li><a href="../guides/reconstitution.html">Zo los je peptiden op</a></li><li><a href="../guides/syringe.html">Zo lees je een spuit af</a></li><li><a href="../guides/pen.html">Zo werkt een peptidepen</a></li><li><a href="../guides/storage.html">Zo bewaar je peptiden</a></li><li><a href="../glossary.html">Woordenlijst</a></li></ul></div>
+      <div class="nav-item has-sub"><a href="../calculators.html" aria-current="page">Rekenhulpen</a><button type="button" class="sub-toggle" aria-expanded="false" aria-label="Toon pagina's in Rekenhulpen"><span aria-hidden="true"></span></button><ul class="submenu"><li><a href="reconstitution-calculator.html">Rekenhulp voor oplossen</a></li><li><a href="supply-calculator.html" aria-current="page">Rekenhulp voor voorraad</a></li></ul></div>
+      <a href="../studies.html">Onderzoek</a>
+      <a href="../compounds.html">Stoffen</a>
+      <div class="lang-switch" role="group" aria-label="Taal"><a href="../../tools/supply-calculator.html" hreflang="en" lang="en" data-set-lang="en">EN</a><a href="supply-calculator.html" hreflang="nl" lang="nl" data-set-lang="nl" aria-current="true">NL</a></div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Navigatiepad"><a href="../index.html">Home</a><span>/</span><a href="../calculators.html">Rekenhulpen</a><span>/</span><span>Voorraad</span></nav>
+      <h1>Rekenhulp voor voorraad</h1>
+      <p class="lede">Plan hoe lang een set flesjes meegaat. Kies de flesgroottes en de gebruikte hoeveelheid, en de rekenhulp geeft het aantal keren, weken en maanden.</p>
+      
+    </div>
+  </section>
+  <section class="section section--tight">
+    <div class="wrap">
+<div class="calc-app" id="supply-app">
+        <div class="calc-sticky" aria-hidden="true">
+          <span>Voorraad gaat mee</span>
+          <span class="calc-sticky-value"><b id="s-sticky">—</b><span>weken</span></span>
+        </div>
+        <div class="calc-grid">
+
+          <div class="calc-inputs">
+
+            <div class="pick">
+              <div class="pick-head">
+                <span class="pick-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6v3.5l3 3V20a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8.5l3-3V2Z"/><path d="M6 13h12"/><path d="M12 10v6"/></svg>
+</span>
+                <span class="pick-label">Flesjes</span>
+                <span class="pick-unit">mg</span>
+              </div>
+              <p class="pick-help">Kies de massa die op het etiket staat en hoeveel flesjes van die grootte. Voeg een rij toe voor elke andere grootte.</p>
+              <div id="vial-rows"></div>
+              <button type="button" class="chip chip--other" id="add-vial">+ Nog een flesgrootte toevoegen</button>
+              <template id="vial-row-tpl">
+                <div class="vial-card">
+                  <div class="vial-card-head">
+                    <span class="vial-card-title"></span>
+                    <button type="button" class="vial-remove">Verwijderen</button>
+                  </div>
+                  <div class="vgroup" data-field="mass">
+                    <span class="vial-cap">Massa flesje</span>
+                    <div class="chips">
+                <button type="button" class="chip" data-value="1" aria-pressed="false">1 mg</button>
+                <button type="button" class="chip" data-value="5" aria-pressed="false">5 mg</button>
+                <button type="button" class="chip" data-value="10" aria-pressed="true">10 mg</button>
+                <button type="button" class="chip" data-value="15" aria-pressed="false">15 mg</button>
+                <button type="button" class="chip" data-value="20" aria-pressed="false">20 mg</button>
+                <button type="button" class="chip chip--other" data-other="1" aria-pressed="false">Anders</button>
+                    </div>
+                    <div class="custom-row">
+                      <input type="text" inputmode="decimal" autocomplete="off" placeholder="Massa flesje" aria-label="Massa flesje">
+                      <span class="unit-pill">mg</span>
+                    </div>
+                  </div>
+                  <div class="vgroup" data-field="qty">
+                    <span class="vial-cap">Aantal</span>
+                    <div class="chips">
+                <button type="button" class="chip" data-value="1" aria-pressed="true">1</button>
+                <button type="button" class="chip" data-value="2" aria-pressed="false">2</button>
+                <button type="button" class="chip" data-value="3" aria-pressed="false">3</button>
+                <button type="button" class="chip" data-value="4" aria-pressed="false">4</button>
+                <button type="button" class="chip" data-value="5" aria-pressed="false">5</button>
+                <button type="button" class="chip chip--other" data-other="1" aria-pressed="false">Anders</button>
+                    </div>
+                    <div class="custom-row">
+                      <input type="text" inputmode="numeric" autocomplete="off" placeholder="Aantal" aria-label="Aantal">
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </div>
+
+            <div class="pick">
+              <div class="pick-head">
+                <span class="pick-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 10h18M8 2.5v4M16 2.5v4"/></svg>
+</span>
+                <span class="pick-label">Schema</span>
+              </div>
+              <p class="pick-help">Kies een hoeveelheid per keer op vaste dagen van de week, of een totale hoeveelheid per week.</p>
+              <div class="seg seg--wide" role="group" aria-label="Schema">
+                <button type="button" class="seg-btn" data-mode="dose" aria-pressed="true">Per keer, op vaste dagen</button>
+                <button type="button" class="seg-btn" data-mode="week" aria-pressed="false">Per week</button>
+              </div>
+            </div>
+
+            <div class="pick" data-block="dose">
+              <div class="pick-head">
+                <span class="pick-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2.5 21.5 7"/><path d="m14.6 4.9 4.5 4.5"/><path d="M18.6 8.6 8.2 19a4.5 4.5 0 0 1-6.4-6.4L12.3 2.2"/><path d="m7 5.5 11.5 11.5"/></svg>
+</span>
+                <span class="pick-label">Hoeveelheid per keer</span>
+              </div>
+              <div class="vgroup" id="amt-dose">
+                <div class="chips">
+                <button type="button" class="chip" data-value="100" aria-pressed="false">100 mcg</button>
+                <button type="button" class="chip" data-value="250" aria-pressed="false">250 mcg</button>
+                <button type="button" class="chip" data-value="500" aria-pressed="false">500 mcg</button>
+                <button type="button" class="chip" data-value="1000" aria-pressed="false">1 mg</button>
+                <button type="button" class="chip" data-value="2500" aria-pressed="false">2,5 mg</button>
+                <button type="button" class="chip" data-value="5000" aria-pressed="false">5 mg</button>
+                <button type="button" class="chip chip--other" data-other="1" aria-pressed="false">Anders</button>
+                </div>
+                <div class="custom-row">
+                  <input type="text" inputmode="decimal" autocomplete="off" placeholder="Hoeveelheid" aria-label="Hoeveelheid per keer">
+                  <span class="seg" role="group" aria-label="Eenheid"><button type="button" class="seg-btn" data-unit="mcg" aria-pressed="true">mcg</button><button type="button" class="seg-btn" data-unit="mg" aria-pressed="false">mg</button></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pick" data-block="week" hidden>
+              <div class="pick-head">
+                <span class="pick-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2.5 21.5 7"/><path d="m14.6 4.9 4.5 4.5"/><path d="M18.6 8.6 8.2 19a4.5 4.5 0 0 1-6.4-6.4L12.3 2.2"/><path d="m7 5.5 11.5 11.5"/></svg>
+</span>
+                <span class="pick-label">Hoeveelheid per week</span>
+              </div>
+              <div class="vgroup" id="amt-week">
+                <div class="chips">
+                <button type="button" class="chip" data-value="500" aria-pressed="false">500 mcg</button>
+                <button type="button" class="chip" data-value="1000" aria-pressed="false">1 mg</button>
+                <button type="button" class="chip" data-value="2500" aria-pressed="false">2,5 mg</button>
+                <button type="button" class="chip" data-value="5000" aria-pressed="false">5 mg</button>
+                <button type="button" class="chip" data-value="10000" aria-pressed="false">10 mg</button>
+                <button type="button" class="chip chip--other" data-other="1" aria-pressed="false">Anders</button>
+                </div>
+                <div class="custom-row">
+                  <input type="text" inputmode="decimal" autocomplete="off" placeholder="Hoeveelheid" aria-label="Hoeveelheid per week">
+                  <span class="seg" role="group" aria-label="Eenheid"><button type="button" class="seg-btn" data-unit="mcg" aria-pressed="true">mcg</button><button type="button" class="seg-btn" data-unit="mg" aria-pressed="false">mg</button></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pick" id="pick-days">
+              <div class="pick-head">
+                <span class="pick-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 10h18M8 2.5v4M16 2.5v4"/></svg>
+</span>
+                <span class="pick-label">Dagen van de week</span>
+              </div>
+              <p class="pick-help">Kies elke dag waarop een portie wordt gebruikt.</p>
+              <div class="chips" id="day-chips" role="group" aria-label="Dagen van de week"></div>
+            </div>
+
+          </div>
+
+          <div class="calc-output" aria-live="polite">
+
+            <div class="result-hero" id="s-hero">
+              <span class="result-label">Voorraad gaat mee</span>
+              <div class="result-value"><span id="s-value">—</span><span class="unit">weken</span></div>
+              <div class="result-sub" id="s-sub">&nbsp;</div>
+            </div>
+
+            <div class="warning-bar" id="s-warning"></div>
+
+            <p class="result-sentence" id="s-sentence"></p>
+
+            <div class="supply-box">
+              <div class="supply-bar" id="s-bar" role="img" aria-label="Tijdlijn die laat zien hoe lang elk flesje meegaat"></div>
+              <ul class="supply-list" id="s-list"></ul>
+            </div>
+
+            <div class="result-rows">
+              <div class="result-line"><span>Totaal in flesjes</span><strong id="s-r-total">—</strong></div>
+              <div class="result-line"><span>Gebruikt per week</span><strong id="s-r-week">—</strong></div>
+              <div class="result-line"><span>Aantal keren</span><strong id="s-r-doses">—</strong></div>
+              <div class="result-line"><span>Weken</span><strong id="s-r-weeks">—</strong></div>
+              <div class="result-line"><span>Maanden</span><strong id="s-r-months">—</strong></div>
+            </div>
+
+            <div class="formula-note" id="s-formula"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="calc-notes">
+        <div class="callout">
+          <strong>Hoe het werkt</strong>
+          Totaal = som van alle flesmassa's. Gebruikt per week = hoeveelheid per keer × dagen per week. Weken = totaal ÷ gebruikt per week. Maanden = weken × 7 ÷ 30,4. Dit is alleen rekenwerk en houdt dus geen rekening met verlies bij het opzuigen. Controleer elk resultaat met de hand voordat je erop vertrouwt.
+        </div>
+        <div class="callout">
+          <strong>Opgeloste flesjes en tijd</strong>
+          De rekenhulp telt milligrammen, geen houdbaarheid. Een opgelost flesje wordt gewoonlijk ongeveer 30 dagen bewaard, en tot 8 weken bij robuuste sequenties. <span class="tag tag--common" title="Gemeld door onderzoekers. Niet afkomstig uit een gecontroleerde studie.">Gangbare praktijk</span>
+ De <a href="../guides/storage.html">bewaargids</a> heeft de volledige tabel.
+        </div>
+        <div class="callout callout--warn">
+  <strong>Uitsluitend voor onderzoek</strong>
+  Deze pagina geeft weer wat gepubliceerde studies en onderzoekers hebben gevonden. Het is informatie, geen advies.
+</div>
+
+      </div>
+<script type="application/json" id="supply-i18n">
+{
+  "mg": "mg",
+  "mcg": "mcg",
+  "vialOne": "{n} flesje",
+  "vialTitle": "Flesje {n}",
+  "vialMany": "{n} flesjes",
+  "dayOne": "{n} dag per week",
+  "dayMany": "{n} dagen per week",
+  "amountDose": "Hoeveelheid per keer",
+  "amountWeek": "Hoeveelheid per week",
+  "enterVial": "Vul de massa van minstens één flesje in.",
+  "enterDose": "Vul de hoeveelheid per keer in.",
+  "enterWeek": "Vul de hoeveelheid per week in.",
+  "pickDays": "Kies de dagen van de week waarop een portie wordt gebruikt.",
+  "subDose": "ongeveer {months} maanden · {doses} keer",
+  "subWeek": "ongeveer {months} maanden",
+  "sentDose": "{vials} met samen {total}. Bij {dose} op {days} is dat {week} per week en {doses} keer. De voorraad gaat {weeks} weken mee, ongeveer {months} maanden.",
+  "sentWeek": "{vials} met samen {total}. Bij {week} per week gaat de voorraad {weeks} weken mee, ongeveer {months} maanden.",
+  "dosesN": "{n} keer",
+  "weeksN": "{n} weken",
+  "monthsN": "{n} maanden",
+  "vialLine": "Flesje {n} · {mass}",
+  "weeksRange": "week {from}–{to}",
+  "workTotal": "Totaal: {total} ({vials})",
+  "workWeekDose": "Per week: {dose} × {n} dagen = {week}",
+  "workWeekEntered": "Per week: {week} (zoals ingevuld)",
+  "workWeeks": "Weken: {total} ÷ {week} = {weeks}",
+  "workMonths": "Maanden: {weeks} weken × 7 ÷ 30,4 = {months}",
+  "workDoses": "Keren: {total} ÷ {dose} = {doses} (hele porties)",
+  "warnLess": "Deze voorraad gaat bij dit schema minder dan een week mee.",
+  "noteMixed": "Eén flesje gaat bij dit schema {w} weken mee. Een opgelost flesje wordt gewoonlijk ongeveer 30 dagen bewaard, tot 8 weken bij robuuste sequenties. Dit is dus langer dan het gebruikelijke tijdvak."
+}
+</script>
+
+<script src="../../js/supply.js"></script>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="logo-link" href="../index.html">
+          <img class="logo-mark" src="../../assets/brand/logo-mark.svg" alt="" width="34" height="34">
+          <span class="logo-word">BRO <span class="logo-sub">Research</span></span>
+        </a>
+        <p>Heldere onderzoeksbronnen over peptiden voor wie er nieuw in is.</p>
+      </div>
+      <div class="footer-cols">
+        <div><h4>Site</h4><a href="../guides.html">Gidsen</a><a href="../calculators.html">Rekenhulpen</a><a href="../studies.html">Onderzoek</a><a href="../compounds.html">Stoffen</a><a href="../glossary.html">Woordenlijst</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 BRO Research. Uitsluitend voor onderzoeksdoeleinden. De inhoud is alleen bedoeld als educatieve en informatieve bron. Zij geeft weer wat gepubliceerde studies laten zien en wat onderzoekers gangbaar doen. Het is geen medisch advies en is niet bedoeld om een aandoening vast te stellen, te behandelen, te genezen of te voorkomen.</div>
+  </div>
+</footer>
+
+<script src="../../js/bro.js"></script>
+</body>
+</html>
