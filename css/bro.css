@@ -754,7 +754,7 @@ table.data a { color: var(--brand); font-weight: 600; }
 .terms dt:first-child { border-top: 0; padding-top: 0; }
 .terms dd { margin: 6px 0 20px; font-size: 16px; line-height: 1.7; color: #3a4354; }
 
-/* ---------- Home: hero art, statement, pillar cards ---------- */
+/* ---------- Home: hero art, research-use banner, pillar cards ---------- */
 
 .hero-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 48px; align-items: center; }
 .hero-art {
@@ -764,13 +764,6 @@ table.data a { color: var(--brand); font-weight: 600; }
 }
 .hero-art svg { width: 100%; height: auto; max-width: 380px; margin: 0 auto; }
 
-.statement {
-  background: var(--soft); border: 1px solid var(--line); border-left: 4px solid var(--brand);
-  border-radius: var(--radius); padding: 24px 28px; max-width: 860px;
-}
-.statement h2 { font-size: 20px; letter-spacing: -.02em; margin: 0 0 10px; }
-.statement p { color: #3a4354; font-size: 16px; line-height: 1.7; margin-bottom: 10px; }
-.statement p:last-child { margin-bottom: 0; }
 
 .grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
@@ -993,3 +986,11 @@ main :is(p, li, dd, td) a:not(.btn):not(.card):hover { text-decoration: underlin
 @media (max-width: 900px) {
   .hero-art--photo { margin: 0 auto; width: 100%; }
 }
+
+/* ---------- Research-use banner (homepage, under the hero) ---------- */
+.ruo-banner { background: var(--brand-tint); border-top: 1px solid #d4ddfa; border-bottom: 1px solid #d4ddfa; padding: 22px 0; }
+.ruo-banner .wrap { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 36px; align-items: baseline; }
+.ruo-banner p { margin: 0; }
+.ruo-banner-lead { font-weight: 800; font-size: 17px; letter-spacing: -.01em; color: var(--ink); }
+.ruo-banner-text { font-size: 15.5px; line-height: 1.6; color: #3a4354; }
+@media (max-width: 900px) { .ruo-banner .wrap { grid-template-columns: 1fr; } }
