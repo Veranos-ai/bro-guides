@@ -47,8 +47,7 @@
 
   var S = JSON.parse(document.getElementById('calc-i18n').textContent);
   var LOCALE = document.documentElement.lang || 'en';
-  var READABLE_MIN = 5;   /* units: below this a draw is hard to read */
-  var READABLE_MAX = 50;  /* units: above this a larger barrel is usual */
+  var C = window.BROCalc; /* the maths lives in calc-core.js */
 
   /* state.dose is always stored in mcg */
   var state = { strength: 10, water: 2, dose: 250, syringe: 100 };
@@ -67,11 +66,8 @@
     return str.replace(/\{(\w+)\}/g, function (_, k) { return vars[k] != null ? vars[k] : ''; });
   }
   /* Accepts 2.5 and 2,5 */
-  function num(s) { return parseFloat(String(s).trim().replace(',', '.')); }
-  function fmt(n, dp) {
-    if (!isFinite(n) || n <= 0) return '—';
-    return parseFloat(n.toFixed(dp)).toLocaleString(LOCALE, { maximumFractionDigits: dp });
-  }
+  var num = C.parseNum;
+  function fmt(n, dp) { return n > 0 ? C.fmt(n, dp, LOCALE) : '—'; }
   function fmtAmount(mcg) {
     return mcg >= 1000 ? fmt(mcg / 1000, 3) + ' ' + S.mg : fmt(mcg, 1) + ' ' + S.mcg;
   }
@@ -131,13 +127,14 @@
 
   function render() {
     var mg = state.strength, ml = state.water, targetMcg = state.dose, barrel = state.syringe;
+    var r = C.reconstitution({ mg: mg, ml: ml, targetMcg: targetMcg, barrel: barrel });
     var barrelMl = barrel / 100;
     el.label.textContent = S.label;
     el.caption.textContent = tpl(S.caption, { ml: barrelMl, max: barrel });
     el.svg.setAttribute('aria-label', S.svgLabel);
     setWarning('', false);
 
-    if (!(mg > 0 && ml > 0 && targetMcg > 0)) {
+    if (!r) {
       el.units.textContent = '—';
       if (el.sticky) el.sticky.textContent = '—';
       el.sub.innerHTML = '&nbsp;';
@@ -148,11 +145,7 @@
       return;
     }
 
-    var targetMg = targetMcg / 1000;
-    var conc = mg / ml;            /* mg per mL */
-    var drawMl = targetMg / conc;  /* mL */
-    var units = drawMl * 100;      /* U-100: 1 unit = 0.01 mL */
-    var draws = Math.floor(mg / targetMg);
+    var targetMg = r.targetMg, conc = r.conc, drawMl = r.drawMl, units = r.units, draws = r.draws;
 
     el.units.textContent = fmt(units, 1);
     if (el.sticky) el.sticky.textContent = fmt(units, 1);
@@ -171,9 +164,9 @@
       tpl(S.workUnits, { d: fmt(drawMl, 3), u: fmt(units, 1) })
     ].join('\n');
 
-    if (units > barrel) setWarning(tpl(S.warnOver, { u: fmt(units, 1), max: barrel }), true);
-    else if (units < READABLE_MIN) setWarning(tpl(S.warnSmall, { u: fmt(units, 1) }), false);
-    else if (units > READABLE_MAX) setWarning(tpl(S.warnLarge, { u: fmt(units, 1) }), false);
+    if (r.status === 'over') setWarning(tpl(S.warnOver, { u: fmt(units, 1), max: barrel }), true);
+    else if (r.status === 'small') setWarning(tpl(S.warnSmall, { u: fmt(units, 1) }), false);
+    else if (r.status === 'large') setWarning(tpl(S.warnLarge, { u: fmt(units, 1) }), false);
 
     drawSyringe(barrel, units);
   }

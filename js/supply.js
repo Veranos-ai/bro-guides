@@ -7,8 +7,7 @@
 
   var S = JSON.parse(document.getElementById('supply-i18n').textContent);
   var LOCALE = document.documentElement.lang || 'en';
-  var DAYS_PER_MONTH = 30.4375;
-  var MIXED_WINDOW_WEEKS = 30 / 7; /* a mixed vial is commonly kept about 30 days */
+  var C = window.BROCalc; /* the maths lives in calc-core.js */
   var MAX_VIALS = 8;
 
   var $ = function (id) { return document.getElementById(id); };
@@ -21,11 +20,8 @@
   var state = { mode: 'dose', unit: 'mcg', days: {} };
 
   function tpl(str, vars) { return str.replace(/\{(\w+)\}/g, function (_, k) { return vars[k] != null ? vars[k] : ''; }); }
-  function num(s) { return parseFloat(String(s).trim().replace(',', '.')); }
-  function fmt(n, dp) {
-    if (!isFinite(n)) return '—';
-    return parseFloat(n.toFixed(dp)).toLocaleString(LOCALE, { maximumFractionDigits: dp });
-  }
+  var num = C.parseNum;
+  function fmt(n, dp) { return C.fmt(n, dp, LOCALE); }
   function amount(mcg) { return mcg >= 1000 ? fmt(mcg / 1000, 3) + ' ' + S.mg : fmt(mcg, 1) + ' ' + S.mcg; }
   function mcgOnly(mcg) { return fmt(mcg, 1) + ' ' + S.mcg; }
   function vials(n) { return tpl(n === 1 ? S.vialOne : S.vialMany, { n: n }); }
@@ -143,20 +139,14 @@
 
   function render() {
     setWarning('');
-    var vs = readVials();
-    var perMcg = amount$[state.mode].value;
     var nDays = Object.keys(state.days).filter(function (k) { return state.days[k]; }).length;
+    var r = C.supply({ vials: readVials(), mode: state.mode, amountMcg: amount$[state.mode].value, days: nDays });
+    if (r.error === 'vials') return clear(S.enterVial);
+    if (r.error === 'amount') return clear(state.mode === 'dose' ? S.enterDose : S.enterWeek);
+    if (r.error === 'days') return clear(S.pickDays);
 
-    if (!vs.length) return clear(S.enterVial);
-    if (!perMcg) return clear(state.mode === 'dose' ? S.enterDose : S.enterWeek);
-    if (state.mode === 'dose' && !nDays) return clear(S.pickDays);
-
-    var totalMg = vs.reduce(function (a, v) { return a + v.mg * v.n; }, 0);
-    var nVials = vs.reduce(function (a, v) { return a + v.n; }, 0);
-    var totalMcg = totalMg * 1000;
-    var weekMcg = state.mode === 'dose' ? perMcg * nDays : perMcg;
-    var weeks = totalMcg / weekMcg, days = weeks * 7, months = days / DAYS_PER_MONTH;
-    var doses = state.mode === 'dose' ? Math.floor(totalMcg / perMcg + 1e-9) : null;
+    var vs = r.segments, perMcg = amount$[state.mode].value;
+    var totalMcg = r.totalMcg, nVials = r.nVials, weekMcg = r.weekMcg, weeks = r.weeks, months = r.months, doses = r.doses, longest = r.longestVialWeeks;
 
     el.units.textContent = fmt(weeks, 1);
     if (el.sticky) el.sticky.textContent = fmt(weeks, 1);
@@ -173,14 +163,11 @@
     el.rMonths.textContent = tpl(S.monthsN, { n: fmt(months, 1) });
 
     /* Timeline: one segment per vial entry, sized by how long it lasts */
-    var at = 0, bar = '', list = '', longest = 0;
+    var bar = '', list = '';
     vs.forEach(function (v, i) {
-      var w = (v.mg * v.n * 1000) / weekMcg, one = (v.mg * 1000) / weekMcg;
-      longest = Math.max(longest, one);
-      bar += '<span class="supply-seg supply-seg--' + (i % 2) + '" style="flex:' + w.toFixed(4) + '"><b>' + (vs.length > 1 ? (i + 1) : '') + '</b></span>';
+      bar += '<span class="supply-seg supply-seg--' + (i % 2) + '" style="flex:' + v.weeks.toFixed(4) + '"><b>' + (vs.length > 1 ? (i + 1) : '') + '</b></span>';
       list += '<li><span>' + tpl(S.vialLine, { n: i + 1, mass: fmt(v.mg, 2) + ' ' + S.mg + ' × ' + v.n }) + '</span><strong>' +
-        tpl(S.weeksRange, { from: fmt(at, 1), to: fmt(at + w, 1) }) + '</strong></li>';
-      at += w;
+        tpl(S.weeksRange, { from: fmt(v.from, 1), to: fmt(v.to, 1) }) + '</strong></li>';
     });
     el.bar.innerHTML = bar;
     el.list.innerHTML = list;
@@ -192,8 +179,8 @@
       tpl(S.workMonths, { weeks: fmt(weeks, 1), months: fmt(months, 1) })
     ].concat(doses != null ? [tpl(S.workDoses, { total: mcgOnly(totalMcg), dose: mcgOnly(perMcg), doses: doses })] : []).join('\n');
 
-    if (weeks < 1) setWarning(S.warnLess);
-    else if (longest > MIXED_WINDOW_WEEKS) setWarning(tpl(S.noteMixed, { w: fmt(longest, 1) }));
+    if (r.warn === 'less') setWarning(S.warnLess);
+    else if (r.warn === 'mixed') setWarning(tpl(S.noteMixed, { w: fmt(longest, 1) }));
   }
 
   addVial();
