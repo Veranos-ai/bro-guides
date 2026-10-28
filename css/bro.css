@@ -583,6 +583,15 @@ table.data tbody tr:hover { background: #fafbfd; }
 table.data td:first-child { font-weight: 600; color: var(--ink); }
 table.data a { color: var(--brand); font-weight: 600; }
 
+/* Device icons that sit alongside a label inside a data table. */
+.device-label { display: inline-flex; align-items: center; gap: 10px; }
+.device-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  flex: 0 0 auto; width: 34px; height: 34px;
+  border: 1px solid var(--line); border-radius: 8px; background: #fff;
+}
+.device-icon svg { display: block; width: 26px; height: 26px; }
+
 /* ---------- Storage page: mixed vs unmixed ---------- */
 
 .state-grid {
