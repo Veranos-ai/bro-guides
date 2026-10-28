@@ -917,3 +917,6 @@ ol.parts { margin: 0 0 14px 1.2em; display: grid; gap: 6px; }
   .submenu { display: block; position: static; box-shadow: none; border: 0; padding: 0 0 6px 14px; min-width: 0; width: 100%; }
   .submenu a { white-space: normal; font-size: 14px; color: var(--muted); }
 }
+
+/* Text under a card grid on a listing page lines up with the cards, not the page centre. */
+.grid + .prose { margin-left: 0; }
