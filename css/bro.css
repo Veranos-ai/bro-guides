@@ -1170,3 +1170,16 @@ table.pf-ramp td.s-8 { background: #8da0ee; } table.pf-ramp td.s-9 { background:
 
 .hormones--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (max-width: 720px) { .hormones--2 { grid-template-columns: 1fr; } }
+
+/* Compound icon in the page hero (right-hand side) */
+.page-head .wrap.has-art { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 32px; align-items: start; }
+.page-head .wrap.has-art > .breadcrumb, .page-head .wrap.has-art > .meta-bar { grid-column: 1 / -1; }
+.page-head .wrap.has-art > h1, .page-head .wrap.has-art > .lede { grid-column: 1; }
+.page-head-art { grid-column: 2; grid-row: 2 / span 2; align-self: center; display: flex; align-items: center; justify-content: center; width: 176px; height: 176px; border-radius: 50%; background: radial-gradient(ellipse 85% 85% at 50% 40%, #ffffff 0%, #eef0f4 78%); border: 1px solid var(--line); }
+.page-head-art svg { width: 120px; height: 120px; display: block; }
+@media (max-width: 720px) {
+  .page-head .wrap.has-art { column-gap: 16px; }
+  .page-head-art { width: 84px; height: 84px; grid-row: 2; align-self: start; }
+  .page-head-art svg { width: 58px; height: 58px; }
+  .page-head .wrap.has-art > .lede { grid-column: 1 / -1; grid-row: 3; margin-top: 4px; }
+}
